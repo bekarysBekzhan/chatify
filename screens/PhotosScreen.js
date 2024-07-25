@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Dimensions, ActivityIndicator, Pressable, Modal, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -36,7 +36,7 @@ const PhotosScreen = () => {
         setModalVisible(true);
     }
 
-    const renderItem = ({ item }) => (
+    const renderItem = useCallback(({ item }) => (
         <Pressable onPress={() => handlePhotoPress(item)}>
 
             <View style={styles.item}>
@@ -44,18 +44,18 @@ const PhotosScreen = () => {
                     source={{ uri: item.thumbnailUrl }}
                     style={styles.image}
                     resizeMode={FastImage.resizeMode.cover}
-                    defaultSource={{ uri: 'https://placehold.co/150x150?text=Hello+World' }} // Ensure you have a placeholder image
+                    defaultSource={{ uri: 'https://placehold.co/150x150?text=Hello+World' }} 
                 />
             </View>
         </Pressable>
-    );
+    ), []);
 
-    const handleLoadMore = () => {
+    const handleLoadMore = useCallback(() => {
         setPage(prevPage => prevPage + 1);
-    };
+    }, []);
 
     return (
-        <View>
+        <View style={styles.mainView}>
 
             <FlatList
                 data={photos}
@@ -80,7 +80,7 @@ const PhotosScreen = () => {
                             <FastImage
                                 style={styles.modalImage}
                                 source={{ uri: selectedPhoto.url }}
-                                //defaultSource={{ uri: 'https://example.com/default-image.png' }}
+                                //defaultSource={{ uri: 'https://placehold.co/150x150?text=Hello+World' }}
                                 resizeMode={FastImage.resizeMode.contain}
                             />
                             <Text style={styles.description}>{selectedPhoto.title}</Text>
@@ -101,10 +101,12 @@ const PhotosScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    mainView: {
+        flex: 1
+    },
     container: {
         flexGrow: 1,
         justifyContent: 'center',
-        padding: 5,
     },
     item: {
         flex: 1,
