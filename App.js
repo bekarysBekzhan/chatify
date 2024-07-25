@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';;
+import React, { useEffect, useMemo, useState } from 'react';;
 import {
   SafeAreaView,
   ScrollView,
@@ -63,12 +63,15 @@ function App() {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+
   return (
-    <AuthProvider>
-      <SocketContextProvider>
-        <StackNavigator />
-      </SocketContextProvider>
-    </AuthProvider>
+
+      <AuthProvider>
+        <SocketContextProvider>
+          <StackNavigator />
+        </SocketContextProvider>
+      </AuthProvider>
+
   );
 }
 

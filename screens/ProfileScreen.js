@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, FlatList, ScrollView, Switch } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../AuthContext'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { jwtDecode } from "jwt-decode";
 import 'core-js/stable/atob';
@@ -16,6 +16,8 @@ import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import themeContext from '../theme/themeContext'
+import { EventRegister } from 'react-native-event-listeners'
 
 const ProfileScreen = () => {
   const [user, setUser] = useState([]);
@@ -52,8 +54,13 @@ const ProfileScreen = () => {
     }
   }
 
+  const theme = useContext(themeContext)
+  const [darkMode, setDarkMode] = useState(false)
+
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView style={styles.flexone}>
+    <SafeAreaView style={[styles.flexone, {color: colors.text, backgroundColor: colors.backgroundColor}]}>
       <View style={styles.header}>
 
         <Text style={styles.headerTitle}>Profile</Text>
@@ -73,17 +80,23 @@ const ProfileScreen = () => {
       </View>
 
       <ScrollView>
-        <View style={styles.profileContainer}>
+        <View style={[styles.profileContainer, {backgroundColor: colors.card}]}>
           <View style={styles.row}>
             <View>
               <Feather name="moon" size={30} color="#734DDE" />
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Dark Mode</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Dark Mode</Text>
             </View>
 
-            <FontAwesome name="toggle-off" size={28} color="gray" />
+            <Switch 
+              value={darkMode}
+              onValueChange={(value) => {
+                setDarkMode(value);
+                EventRegister.emit('ChangeTheme', value)
+              }}
+            />
           </View>
 
           <View style={styles.line} />
@@ -98,7 +111,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Account</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Account</Text>
               <Text style={{ color: "gray" }}>Name, City, Phone</Text>
             </View>
 
@@ -111,7 +124,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Notificatoins</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Notificatoins</Text>
             </View>
 
             <Feather name="chevron-right" size={22} color="gray" />
@@ -127,7 +140,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Security and Privacy</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Security and Privacy</Text>
             </View>
 
             <Feather name="chevron-right" size={22} color="gray" />
@@ -143,7 +156,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Storage</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Storage</Text>
             </View>
 
             <Feather name="chevron-right" size={22} color="gray" />
@@ -159,7 +172,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Chats</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Chats</Text>
               <Text style={{ color: "gray" }}>Themes and Personalization</Text>
             </View>
 
@@ -176,7 +189,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Devices</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Devices</Text>
             </View>
 
             <Feather name="chevron-right" size={22} color="gray" />
@@ -192,7 +205,7 @@ const ProfileScreen = () => {
             </View>
 
             <View style={styles.flexone}>
-              <Text style={styles.boldText}>Help</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>Help</Text>
             </View>
 
             <Feather name="chevron-right" size={22} color="gray" />
@@ -209,7 +222,7 @@ const ProfileScreen = () => {
               </View>
 
               <View style={styles.flexone}>
-                <Text style={styles.boldText}>Log out</Text>
+                <Text style={[styles.boldText, {color: colors.text}]}>Log out</Text>
               </View>
 
               <Feather name="chevron-right" size={22} color="gray" />

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthContext';
 import User from '../components/User';
 import styles from '../assets/stylesheet/styles';
+import { useTheme } from '@react-navigation/native';
 
 const PeopleScreen = () => {
   const [users, setUsers] = useState([]);
@@ -23,11 +24,13 @@ const PeopleScreen = () => {
   }, []);
   console.log("users", users)
 
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.flexone, {backgroundColor: colors.background}]}>
       <View>
         <Text
-          style={styles.headerText}>
+          style={[styles.headerText, {color: colors.text}]}>
           People using Chatify
         </Text>
       </View>

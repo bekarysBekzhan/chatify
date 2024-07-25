@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../AuthContext'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { jwtDecode } from "jwt-decode";
 import 'core-js/stable/atob';
@@ -167,6 +167,9 @@ const ChatScreen = () => {
     },
   ];
 
+
+  const { colors } = useTheme()
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
@@ -187,7 +190,7 @@ const ChatScreen = () => {
 
           <View style={styles.storyContainer}>
 
-            <InstaStory data={data} duration={10} />
+            <InstaStory data={data} duration={10} style={{color: colors.text}}/>
 
           </View>
 
@@ -196,9 +199,9 @@ const ChatScreen = () => {
           onPress={() => chooseOption("Chats")}
           style={styles.option}>
           <View>
-            <Text style={styles.optionText}>Chats</Text>
+            <Text style={[styles.optionText, {color: colors.text}]}>Chats</Text>
           </View>
-          <Entypo name="chevron-small-down" size={26} color="black" />
+          <Entypo name="chevron-small-down" size={26} color={colors.text} />
         </Pressable>
 
         <View>
@@ -213,8 +216,8 @@ const ChatScreen = () => {
               <View
                 style={styles.chatList}>
                 <View>
-                  <Text>No Chats yet</Text>
-                  <Text>Get started by messaging a friend</Text>
+                  <Text style={{color: colors.text}}>No Chats yet</Text>
+                  <Text style={{color: colors.text}}>Get started by messaging a friend</Text>
                 </View>
               </View>
             ))}
@@ -224,15 +227,15 @@ const ChatScreen = () => {
           onPress={() => chooseOption("Requests")}
           style={styles.option}>
           <View>
-            <Text style={styles.optionText}>Requests</Text>
+            <Text style={[styles.optionText, {color: colors.text}]}>Requests</Text>
           </View>
-          <Entypo name="chevron-small-down" size={26} color="black" />
+          <Entypo name="chevron-small-down" size={26} color={colors.text} />
         </Pressable>
 
         <View style={{ marginVertical: 12 }}>
           {options?.includes("Requests") && (
             <View>
-              <Text style={styles.mediumBoldText}>Checkout all the requests</Text>
+              <Text style={[styles.mediumBoldText, {color: colors.text}]}>Checkout all the requests</Text>
               {requests?.map((item, index) => (
                 <Pressable style={styles.requestContainer}>
                   <View style={styles.flexRowAlignCenterGapTen}>

@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { AuthContext } from '../AuthContext';
 import styles from '../assets/stylesheet/styles';
 
@@ -8,6 +8,8 @@ const Chat = ({ item }) => {
     const navigation = useNavigation();
     const { userId } = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
+
+    const { colors } = useTheme()
     return (
         <Pressable
             onPress={() => navigation.navigate('ChatRoom', {
@@ -24,8 +26,8 @@ const Chat = ({ item }) => {
                 </Pressable>
 
                 <View>
-                    <Text style={styles.mediumBoldText}>{item?.name}</Text>
-                    <Text style={styles.subText}>chat with {item?.name}</Text>
+                    <Text style={[styles.mediumBoldText, {color: colors.text}]}>{item?.name}</Text>
+                    <Text style={[styles.subText, {color: colors.text}]}>chat with {item?.name}</Text>
                 </View>
 
                 <Text>{item?.date}</Text>

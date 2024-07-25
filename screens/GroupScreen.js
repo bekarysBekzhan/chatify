@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, ScrollView } from 'react-native'
 import React from 'react'
-import InstaStory from 'react-native-insta-story';
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from '../assets/stylesheet/styles';
+import { useTheme } from '@react-navigation/native';
 
 const GroupScreen = () => {
 
@@ -40,6 +40,8 @@ const GroupScreen = () => {
             date: '2:45 AM',
         },
     ];
+
+    const { colors } = useTheme();
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.header}>
@@ -58,15 +60,15 @@ const GroupScreen = () => {
             <ScrollView>
                 <View style={styles.paddingTen}>
                     {channels?.map((item, index) => (
-                        <View style={styles.channelContainer}>
-                            <View style={styles.channelInfo}>
+                        <View style={[styles.channelContainer, {backgroundColor: colors.card}]}>
+                            <View style={[styles.channelInfo]}>
                                 <View>
                                     <Image style={styles.smallImage} source={{ uri: item?.image }} />
                                 </View>
 
                                 <View style={{ flex: 1 }}>
-                                    <Text style={styles.channelName}>{item?.name}</Text>
-                                    <Text style={styles.channelText}>{item?.text}</Text>
+                                    <Text style={[styles.channelName, {color: colors.text}]}>{item?.name}</Text>
+                                    <Text style={[styles.channelText, {color: colors.text}]}>{item?.text}</Text>
                                 </View>
 
                                 <Feather name="chevron-right" size={26} color="gray" />
